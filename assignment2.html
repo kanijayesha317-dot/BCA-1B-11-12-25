@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links, Images, and Lists</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --bg: #f8fafc;
+            --text: #334155;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem;
+            margin: 0;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 { color: var(--primary); }
+        h1 { border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+
+        /* Links styling */
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        a:hover { color: #1d4ed8; text-decoration: underline; }
+
+        /* Image styling */
+        .img-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        figcaption {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* List styling */
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        li { margin-bottom: 0.5rem; }
+        
+        /* Nested list styling */
+        ul ul, ol ol {
+            margin-top: 0.5rem;
+            background: #f1f5f9;
+            padding: 10px 20px;
+            border-radius: 8px;
+            list-style-type: square;
+        }
+
+        .explanation {
+            background: #fdf2f8;
+            border-left: 4px solid #ec4899;
+            padding: 1rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header>
+            <h1>Working with Media & Lists</h1>
+            <p>This page demonstrates how to enrich HTML documents with external resources and structured data.</p>
+        </header>
+
+        <main>
+            <!-- SECTION 1: LINKS -->
+            <section>
+                <h2>1. Hyperlinks</h2>
+                <p>Links are created using the <code>&lt;a&gt;</code> (anchor) tag. The <code>href</code> attribute specifies the destination.</p>
+                <ul>
+                    <li><a href="https://www.google.com" target="_blank">External Link (Google)</a> - Opens in a new tab.</li>
+                    <li><a href="mailto:example@email.com">Email Link</a> - Opens your default email client.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 2: IMAGES -->
+            <section>
+                <h2>2. Images</h2>
+                <div class="explanation">
+                    <strong>Note:</strong> Images use the <code>&lt;img&gt;</code> tag which is "self-closing." Always include an <code>alt</code> attribute for accessibility.
+                </div>
+                <figure class="img-container">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" 
+                         alt="A laptop screen displaying code"
+                         onerror="this.src='https://via.placeholder.com/800x400?text=Code+Image+Placeholder'">
+                    <figcaption>Figure 1: Visualizing the power of code through images.</figcaption>
+                </figure>
+            </section>
+
+            <!-- SECTION 3: LISTS -->
+            <section>
+                <h2>3. Lists</h2>
+                
+                <h3>Unordered List (Bullet points)</h3>
+                <ul>
+                    <li>HTML5 Semantic Tags</li>
+                    <li>CSS Flexbox and Grid</li>
+                    <li>JavaScript ES6+</li>
+                </ul>
+
+                <h3>Ordered List (Numbered)</h3>
+                <ol>
+                    <li>Plan the website architecture</li>
+                    <li>Design the User Interface</li>
+                    <li>Write the production code</li>
+                </ol>
+
+                <h3>Nested List (Structure within Structure)</h3>
+                <p>Lists can be placed inside other lists to represent complex hierarchies:</p>
+                <ul>
+                    <li>Frontend Development
+                        <ul>
+                            <li>React.js (Library)</li>
+                            <li>Vue.js (Framework)</li>
+                            <li>Svelte (Compiler)</li>
+                        </ul>
+                    </li>
+                    <li>Backend Development
+                        <ol>
+                            <li>Node.js</li>
+                            <li>Python (Django/Flask)</li>
+                            <li>Go (Golang)</li>
+                        </ol>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Web Mastery Guide</p>
+        </footer>
+    </div>
+
+</body>
+</html>

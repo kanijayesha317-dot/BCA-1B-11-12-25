@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table Layout Example</title>
+    <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin: auto;
+        }
+        caption {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <caption>Student Information Table</caption>
+
+        <tr>
+            <th rowspan="2">ID</th>
+            <th colspan="2">Name</th>
+            <th rowspan="2">Grade</th>
+        </tr>
+
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+
+        <tr>
+            <td>101</td>
+            <td>Kanij</td>
+            <td>Ayesha</td>
+            <td>A</td>
+        </tr>
+
+        <tr>
+            <td>102</td>
+            <td>Rama</td>
+            <td>Nayak</td>
+            <td>B</td>
+        </tr>
+
+        <tr>
+            <td colspan="4" align="center">
+                End of Student Records
+            </td>
+        </tr>
+
+    </table>
+
+</body>
+</html>
