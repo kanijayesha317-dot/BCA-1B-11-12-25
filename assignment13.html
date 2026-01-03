@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Functions and Scope in JavaScript</title>
+</head>
+<body>
+
+<h2>JavaScript Functions & Scope</h2>
+
+<button onclick="showVar()">var Scope</button>
+<button onclick="showLet()">let Scope</button>
+<button onclick="showConst()">const Scope</button>
+
+<p id="output"></p>
+
+<script>
+    /* ===== USER-DEFINED FUNCTION with var ===== */
+    function showVar() {
+        var x = 10;   // function scope
+
+        if (true) {
+            var x = 20;   // same variable (var has no block scope)
+        }
+
+        document.getElementById("output").innerHTML =
+            "Using var: x = " + x;
+    }
+
+    /* ===== USER-DEFINED FUNCTION with let ===== */
+    function showLet() {
+        let y = 10;   // block scope
+
+        if (true) {
+            let y = 20;   // different variable (block scope)
+        }
+
+        document.getElementById("output").innerHTML =
+            "Using let: y = " + y;
+    }
+
+    /* ===== USER-DEFINED FUNCTION with const ===== */
+    function showConst() {
+        const z = 30;   // block scope & constant
+
+        document.getElementById("output").innerHTML =
+            "Using const: z = " + z;
+    }
+</script>
+
+</body>
+</html>
