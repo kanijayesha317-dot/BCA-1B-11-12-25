@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Selectors Example</title>
+
+    <style>
+        /* 1️⃣ Universal Selector */
+        * {
+            font-family: Arial;
+        }
+
+        /* 2️⃣ ID Selector */
+        #main {
+            background-color: lightblue;
+            padding: 15px;
+            border: 2px solid blue;
+        }
+
+        /* 3️⃣ Class Selector */
+        .text {
+            color: green;
+            font-size: 18px;
+        }
+
+        /* 4️⃣ Descendant Selector */
+        div p {
+            color: brown;
+        }
+
+        /* 5️⃣ Group Selector */
+        h1, h2, h3 {
+            text-align: center;
+            color: darkred;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>CSS Selectors Demo</h1>
+
+    <div id="main">
+        <h2>ID Selector</h2>
+        <p>This paragraph is inside a div (descendant selector applied).</p>
+    </div>
+
+    <p class="text">
+        This paragraph uses Class Selector.
+    </p>
+
+    <h3>Group Selector Example</h3>
+
+</body>
+</html>
