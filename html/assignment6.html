@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inline, Internal & External CSS</title>
+
+    <!-- 🔹 External CSS Link -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- 🔹 Internal CSS -->
+    <style>
+        h2 {
+            color: green;
+            text-align: center;
+        }
+
+        .internal {
+            font-size: 18px;
+            color: purple;
+            border: 2px solid black;
+            padding: 10px;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🔹 Inline CSS -->
+    <h1 style="color: red; text-align: center;">
+        This is Inline CSS
+    </h1>
+
+    <!-- 🔹 Internal CSS -->
+    <h2>This is Internal CSS</h2>
+    <p class="internal">
+        This paragraph is styled using Internal CSS.
+    </p>
+
+    <!-- 🔹 External CSS -->
+    <h3 class="external">
+        This is External CSS
+    </h3>
+    <p class="external">
+        This paragraph is styled using External CSS.
+    </p>
+
+</body>
+</html>

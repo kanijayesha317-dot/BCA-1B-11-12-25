@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Manipulation Example</title>
+</head>
+<body>
+
+<h2 id="title">DOM Manipulation</h2>
+
+<p class="text">This is a paragraph.</p>
+
+<button onclick="changeById()">Change using getElementById()</button>
+<button onclick="changeByQuery()">Change using querySelector()</button>
+
+<script>
+    // Using getElementById()
+    function changeById() {
+        document.getElementById("title").innerHTML =
+            "Text Changed using getElementById()";
+    }
+
+    // Using querySelector()
+    function changeByQuery() {
+        document.querySelector(".text").innerHTML =
+            "Text Changed using querySelector()";
+    }
+</script>
+
+</body>
+</html>
