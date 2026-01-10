@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --correct: #22c55e;
+            --incorrect: #ef4444;
+            --active: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .stat-box div {
+            font-size: 1.5rem;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        #text-display {
+            font-size: 1.35rem;
+            line-height: 1.6;
+            background: #fff;
+            padding: 1.5rem;
+            border: 2px solid var(--active);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            min-height: 120px;
+            user-select: none;
+            letter-spacing: 0.5px;
+        }
+
+        .char {
+            border-bottom: 2px solid transparent;
+        }
+
+        .char.correct { color: var(--correct); }
+        .char.incorrect { 
+            color: var(--incorrect); 
+            background: #fee2e2;
+            border-radius: 2px;
+        }
+        .char.current { 
+            border-bottom: 2px solid var(--primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        #input-field {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--active);
+            border-radius: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+            margin-bottom: 1.5rem;
+        }
+
+        #input-field:focus {
+            border-color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--primary-hover); }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--active);
+            color: var(--text-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-light);
+            color: var(--text-dark);
+        }
+
+        /* Results Modal */
+        #results-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal h2 { margin-bottom: 1rem; }
+        .final-stat {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Typing Speed Test</h1>
+            <p>Start typing to begin the timer</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-box">
+                <span>Time Left</span>
+                <div id="timer">60s</div>
+            </div>
+            <div class="stat-box">
+                <span>WPM</span>
+                <div id="wpm">0</div>
+            </div>
+            <div class="stat-box">
+                <span>Accuracy</span>
+                <div id="accuracy">100%</div>
+            </div>
+        </div>
+
+        <div id="text-display"></div>
+        
+        <input type="text" id="input-field" placeholder="Type the text above here..." autofocus autocomplete="off">
+
+        <div class="controls">
+            <button class="btn btn-outline" onclick="resetGame()">Restart</button>
+        </div>
+    </div>
+
+    <div id="results-overlay">
+        <div class="modal">
+            <h2>Test Complete!</h2>
+            <div id="final-wpm" class="final-stat">0</div>
+            <p style="color: var(--text-light)">Words Per Minute</p>
+            <div id="result-details" style="margin: 1.5rem 0; line-height: 1.8;">
+                <!-- Filled by JS -->
+            </div>
+            <button class="btn btn-primary" onclick="resetGame()">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        const paragraphs = [
+            "The quick brown fox jumps over the lazy dog. This classic sentence contains every letter of the English alphabet, making it perfect for typing practice.",
+            "Success is not final, failure is not fatal: it is the courage to continue that counts. Your time is limited, so don't waste it living someone else's life.",
+            "Technology is best when it brings people together. The advance of technology is based on making it fit in so that you don't even really notice it.",
+            "In the middle of every difficulty lies opportunity. Nature does not hurry, yet everything is accomplished in the end. Simplicity is the ultimate sophistication.",
+            "Programming is the art of telling another human being what one wants the computer to do. Code is like humor. When you have to explain it, it's bad."
+        ];
+
+        let timeLeft = 60;
+        let timer = null;
+        let isTyping = false;
+        let charIndex = 0;
+        let mistakes = 0;
+
+        const textDisplay = document.getElementById('text-display');
+        const inputField = document.getElementById('input-field');
+        const timerTag = document.getElementById('timer');
+        const wpmTag = document.getElementById('wpm');
+        const accuracyTag = document.getElementById('accuracy');
+        const resultsOverlay = document.getElementById('results-overlay');
+
+        function loadParagraph() {
+            const randIndex = Math.floor(Math.random() * paragraphs.length);
+            textDisplay.innerHTML = "";
+            paragraphs[randIndex].split("").forEach(char => {
+                let span = `<span class="char">${char}</span>`;
+                textDisplay.innerHTML += span;
+            });
+            textDisplay.querySelectorAll('.char')[0].classList.add('current');
+            
+            // Focus input whenever user clicks the display
+            textDisplay.addEventListener('click', () => inputField.focus());
+        }
+
+        function initTyping() {
+            const characters = textDisplay.querySelectorAll('.char');
+            let typedChar = inputField.value.split("")[charIndex];
+
+            if (charIndex < characters.length && timeLeft > 0) {
+                if (!isTyping) {
+                    isTyping = true;
+                    timer = setInterval(startTimer, 1000);
+                }
+
+                // Handle Backspace (not supported by simple input value tracking, so we logic it out)
+                // Note: This logic assumes user doesn't use backspace for simplicity in this version, 
+                // but we detect the current character match here.
+                
+                if (typedChar == null) {
+                    // This handles potential delete/backspace if logic was expanded
+                    // For now, we move forward.
+                } else {
+                    if (characters[charIndex].innerText === typedChar) {
+                        characters[charIndex].classList.add('correct');
+                    } else {
+                        mistakes++;
+                        characters[charIndex].classList.add('incorrect');
+                    }
+                    characters[charIndex].classList.remove('current');
+                    charIndex++;
+                    
+                    if(charIndex < characters.length) {
+                        characters[charIndex].classList.add('current');
+                    }
+                }
+
+                // Update real-time stats
+                let wpm = Math.round(((charIndex - mistakes) / 5) / ((60 - timeLeft) / 60));
+                wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+                wpmTag.innerText = wpm;
+
+                let acc = Math.round(((charIndex - mistakes) / charIndex) * 100);
+                accuracyTag.innerText = `${acc >= 0 ? acc : 100}%`;
+
+                // Auto finish if paragraph ends
+                if (charIndex === characters.length) {
+                    clearInterval(timer);
+                    showResults();
+                }
+            }
+        }
+
+        function startTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timerTag.innerText = `${timeLeft}s`;
+            } else {
+                clearInterval(timer);
+                showResults();
+            }
+        }
+
+        function showResults() {
+            inputField.disabled = true;
+            const finalWpmValue = wpmTag.innerText;
+            const finalAccValue = accuracyTag.innerText;
+            
+            document.getElementById('final-wpm').innerText = finalWpmValue;
+            document.getElementById('result-details').innerHTML = `
+                <strong>Accuracy:</strong> ${finalAccValue}<br>
+                <strong>Mistakes:</strong> ${mistakes}<br>
+                <strong>Characters Typed:</strong> ${charIndex}
+            `;
+            resultsOverlay.style.display = 'flex';
+        }
+
+        function resetGame() {
+            loadParagraph();
+            clearInterval(timer);
+            timeLeft = 60;
+            charIndex = 0;
+            mistakes = 0;
+            isTyping = false;
+            inputField.disabled = false;
+            inputField.value = "";
+            timerTag.innerText = "60s";
+            wpmTag.innerText = "0";
+            accuracyTag.innerText = "100%";
+            resultsOverlay.style.display = 'none';
+        }
+
+        inputField.addEventListener('input', initTyping);
+        
+        // Disable pasting to ensure honest testing
+        inputField.addEventListener('paste', e => e.preventDefault());
+
+        // Initialize
+        loadParagraph();
+    </script>
+</body>
+</html>
